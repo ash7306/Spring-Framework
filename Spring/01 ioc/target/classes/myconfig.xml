@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- xml 방식으로 관리함 -->
+
+				<!-- 패키지.클래스   아이디설정-->
+	<bean class="mybeans.MyBean" id="first"></bean>
+
+		<!-- 의존성 주입 : 클래스-->
+	<bean class="mybeans.MyLogic" id="second">
+		<constructor-arg ref="first"></constructor-arg>
+		<!-- 일반 주입으로만 부족해서 생성자로  -->
+	</bean>
+
+	<bean class="mybeans.MyStatefulObj" id="third" scope="prototype">
+		<constructor-arg value="my-name"></constructor-arg>
+		<constructor-arg value="100"></constructor-arg>
+		<!-- 생성자 에서 여러개 인자를 받을 때 파라미터 순서대로 적어주면 된다 -->
+		<!-- 싱글턴이 아닌 그때그떄 생성되는 객체로 관리 할 때 프로토 타입으로 스코프 영역으로 지정함 -->
+		<!-- 빈을 지정할때 마다 새롭게 만들어서 줌 (스코프 = 프로토타입)-->
+	</bean>
+
+	<bean class="mybeans.MyStatefulObj" id="fourth" scope="prototype" primary="true">
+		<!-- 똑같은 타입의 빈이 있어도 (프라이머리=트루)로 기본값 설정가능 -->
+		<!-- 세터를 통한 설정, name에 필드 이름을 적어줌 -->
+		<property name="name" value="bysetter"></property>
+		<property name="number" value="400"></property>
+	</bean>
+</beans>
